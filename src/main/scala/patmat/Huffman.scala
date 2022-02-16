@@ -22,7 +22,10 @@ trait Huffman extends HuffmanInterface:
 
   // Part 1: Basics
   def weight(tree: CodeTree): Int = {
-       Fork(left, right, chars, weight) => weight
+    tree match {
+      case Fork(left, right, chars, weight) => weight
+      case Leaf(char, weight) => weight
+    }
   }
 
   def chars(tree: CodeTree): List[Char] = ??? // tree match ...
