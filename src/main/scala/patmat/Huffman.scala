@@ -21,7 +21,9 @@ case class Leaf(char: Char, weight: Int) extends CodeTree
 trait Huffman extends HuffmanInterface:
 
   // Part 1: Basics
-  def weight(tree: CodeTree): Int = ??? // tree match ...
+  def weight(tree: CodeTree): Int = {
+       Fork(left, right, chars, weight) => weight
+  }
 
   def chars(tree: CodeTree): List[Char] = ??? // tree match ...
 
