@@ -113,8 +113,8 @@ trait Huffman extends HuffmanInterface:
   def combine(trees: List[CodeTree]): List[CodeTree] =
     trees match {
     case x::xs => {
-      val newTree = makeCodeTree(xs.head, x)
-      xs.tail.filter(tree => weight(tree) < weight(newTree))
+      val newTree = makeCodeTree(x, xs.head)
+      xs.tail.filter(tree => weight(tree) < weight(newTree)) ::: newTree :: xs.tail.filter(tree => weight(tree) >= weight(newTree))
     }
     case _ => trees
   }
