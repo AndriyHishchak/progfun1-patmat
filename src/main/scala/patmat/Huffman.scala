@@ -74,7 +74,15 @@ trait Huffman extends HuffmanInterface:
    *       println("integer is  : "+ theInt)
    *   }
    */
-  def times(chars: List[Char]): List[(Char, Int)] = ???
+  def times(chars: List[Char]): List[(Char, Int)] = {
+    def setChar(xs: List[Char]): List[List[Char]] = xs match{
+      case Nil => Nil
+      case x::setXs =>
+        val(first, rest) = xs span (y => y == x)
+        first::setChar(rest)
+    }
+    setChar(chars.sorted).map(ys =>(ys.head,ys.length))
+  }
 
   /**
    * Returns a list of `Leaf` nodes for a given frequency table `freqs`.
@@ -130,9 +138,12 @@ trait Huffman extends HuffmanInterface:
    * In such an invocation, `until` should call the two functions until the list of
    * code trees contains only one single tree, and then return that singleton list.
    */
-  def until(done: List[CodeTree] => Boolean, merge: List[CodeTree] => List[CodeTree])(trees: List[CodeTree]): List[CodeTree] = ???
-
-  /**
+  def until(done: List[CodeTree] => Boolean, merge: List[CodeTree] => List[CodeTree])(trees: List[CodeTree]): List[CodeTree] =
+  done(trees) match {
+  case true => trees
+  case false => until(done,merge)(merge(trees))
+}
+/**
    * This function creates a code tree which is optimal to encode the text `chars`.
    *
    * The parameter `chars` is an arbitrary text. This function extracts the character
